@@ -1,0 +1,14 @@
+version: '3.8'
+services:
+  100-blocks-dev-db:
+    image: postgres:13
+    ports:
+      - '5435:5432'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=12345678
+      - POSTGRES_DB=test
+    networks:
+      - stillwater
+networks:
+  stillwater:
