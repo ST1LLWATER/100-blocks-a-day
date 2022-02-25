@@ -11,25 +11,40 @@ datasource db {
 }
 
 model User {
-  id       Int    @id @default(autoincrement())
+  id       Int      @id @default(autoincrement())
   name     String
   email    String
   password String
+  waketime DateTime
 
-  blocks Blocks[]
+  blocks Block[]
   @@map("users")
 }
 
-model Blocks {
-  id Int @id @default(autoincrement())
-
-  date        DateTime
-  blocks      Int[]
-  description String
-  image       String
+model Block {
+  date       DateTime
+  blockindex Int
 
   userId Int
   user   User @relation(fields: [userId], references: [id])
 
+  Blockdata Blockdata[]
+  @@unique([date, blockindex])
   @@map("blocks")
+}
+
+model Blockdata {
+  id Int @id @default(autoincrement())
+
+  isproductive Boolean @default(false)
+  description  String
+
+
+
+  blockindex Int
+  blockdate  DateTime
+  block      Block    @relation(fields: [blockindex, blockdate], references: [blockindex, date])
+
+
+  @@map("blockdata")
 }

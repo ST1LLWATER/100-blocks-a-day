@@ -5,7 +5,7 @@ const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 /* GET users listing. */
-router.get('/adduser', async (req, res) => {
+router.post('/setblock', async (req, res) => {
   const body = req.body;
 
   res.json(body);
