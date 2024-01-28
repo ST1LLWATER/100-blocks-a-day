@@ -17,34 +17,36 @@ model User {
   password String
   waketime DateTime
 
-  blocks Block[]
+  Block Block[]
+  Task  Task[]
   @@map("users")
 }
 
-model Block {
-  date       DateTime
-  blockindex Int
-
-  userId Int
-  user   User @relation(fields: [userId], references: [id])
-
-  Blockdata Blockdata[]
-  @@unique([date, blockindex])
-  @@map("blocks")
-}
-
-model Blockdata {
+model Task {
   id Int @id @default(autoincrement())
 
-  isproductive Boolean @default(false)
-  description  String
+  title       String
+  description String
 
+  userId Int
 
+  Block Block[]
 
-  blockindex Int
-  blockdate  DateTime
-  block      Block    @relation(fields: [blockindex, blockdate], references: [blockindex, date])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("tasks")
+}
 
+model Block {
+  id            Int     @id @default(autoincrement())
+  date          String
+  blockindex    Int
+  is_productive Boolean
 
-  @@map("blockdata")
+  taskId Int
+  userId Int
+
+  task Task @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("blocks")
 }

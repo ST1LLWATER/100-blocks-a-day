@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  100-blocks-dev-db:
+  dev-db:
     image: postgres:13
     ports:
       - '5435:5432'
